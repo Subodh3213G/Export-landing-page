@@ -12,7 +12,12 @@ app.use(cors());
 app.use(express.json()); // Parse JSON bodies
 
 // Serve static files from the current directory
-app.use(express.static(path.join(__dirname, '')));
+app.use(express.static(__dirname));
+
+// Explicit fallback for the root URL
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'index.html'));
+});
 
 // The API endpoint for the contact form
 app.post('/api/contact', async (req, res) => {
